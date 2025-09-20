@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Para Romina Daniela 💖</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: black;
+      color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .message {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2em;
+      opacity: 0;
+      transition: opacity 2s;
+      text-shadow: 0 0 15px #fff, 0 0 30px #f0f;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="galaxy"></canvas>
+  <div id="text" class="message"></div>  <script>
+    const canvas = document.getElementById('galaxy');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const stars = [];
+    for (let i = 0; i < 500; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        z: Math.random() * canvas.width
+      });
+    }
+    function drawStars() {
+      ctx.fillStyle = 'black';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = 'white';
+      for (let star of stars) {
+        let k = 128.0 / star.z;
+        let x = star.x * k + canvas.width / 2;
+        let y = star.y * k + canvas.height / 2;
+        if (x >= 0 && x <= canvas.width && y >= 0 && y <= canvas.height) {
+          let size = (1 - star.z / canvas.width) * 3;
+          ctx.beginPath();
+          ctx.arc(x, y, size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        star.z -= 2;
+        if (star.z <= 0) {
+          star.x = Math.random() * canvas.width - canvas.width / 2;
+          star.y = Math.random() * canvas.height - canvas.height / 2;
+          star.z = canvas.width;
+        }
+      }
+    }
+    setInterval(drawStars, 30);
+    const messages = [
+      "Perdón",
+      "Sos mi esposa",
+      "Te amo",
+      "Romina Daniela te amo",
+      "Confianza",
+      "Respeto",
+      "Paciencia",
+      "Compañía",
+      "Apoyo",
+      "Compromiso",
+      "Alegría",
+      "Risa",
+      "Futuro",
+      "Hogar",
+      "Ternura",
+      "Cariño",
+      "Eternidad",
+      "Destino",
+      "Alma",
+      "Unión",
+      "Felicidad"
+    ];
+    const textDiv = document.getElementById('text');
+    let index = 0;
+    function showNextMessage() {
+      textDiv.style.opacity = 0;
+      setTimeout(() => {
+        textDiv.innerText = messages[index];
+        textDiv.style.opacity = 1;
+      }, 1000);
+      index = (index + 1) % messages.length;
+    }
+    setInterval(showNextMessage, 4000);
+    showNextMessage();
+  </script></body>
+</html>
